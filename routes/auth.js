@@ -3,7 +3,7 @@ const router = express.Router();
 const bcrypt = require('bcrypt');
 
 const User = require('../models/user');
-const { isLoggin } = require('../helpers/isLoggin');
+const { isLoggedIn } = require('../helpers/isLoggin');
 
 router.get('/login', (req, res, next) => {
   if(req.session.currentUser) {
