@@ -46,7 +46,6 @@ router.post('/login', (req, res, next) => {
 
 router.post('/signup', (req, res, next) => {
   const {
-    username,
     email,
     password
   } = req.body;
@@ -71,7 +70,6 @@ router.post('/signup', (req, res, next) => {
       const hashPass = bcrypt.hashSync(password, salt);
 
       const newUser = User({
-        username,
         email,
         password: hashPass,
       });

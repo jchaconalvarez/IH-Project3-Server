@@ -6,29 +6,39 @@ const logger = require('morgan');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
+const cors = require('cors');
 
 require('dotenv').config();
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'connection error:'));
-db.once('open', () => console.log(`Connected to auth-react database`));
+// const db = mongoose.connection;
+// db.on('error', console.error.bind(console, 'connection error:'));
+// db.once('open', () => console.log(`Connected to auth-react database`));
 
-const indexRouter = require('./routes/index');
-const authRouter = require('./routes/auth');
+mongoose.connect('mongodb://admin:admin2018@ds125723.mlab.com:25723/ihproject3', { useNewUrlParser: true })
+  .then(() => ( console.log('CONNECTED!')))
+  .catch((error) => ( console.log(error)));
 
 const app = express();
+app.use(cors({
+  origin: 'http://localhost:3000',
+  credentials: true,
+}));
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'jade');
 
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE');
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next();
-});
+// CORS FIX
+// app.use((req, res, next) => {
+//   res.setHeader('Access-Control-Allow-Origin', 'http://localhost:3000');
+//   res.setHeader('Access-Control-Allow-Methods', 'GET, PUT, POST, OPTIONS, DELETE');
+//   res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
+//   res.setHeader('Access-Control-Allow-Credentials', true);
+//   next();
+// });
+
+const authRouter = require('./routes/auth');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
