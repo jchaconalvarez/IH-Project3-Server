@@ -5,6 +5,14 @@ const bcrypt = require('bcrypt');
 const User = require('../models/user');
 const { isLoggedIn } = require('../helpers/isLoggin');
 
+router.get('/me', (req, res, next) => {
+  if (req.session.currentUser) {
+    res.json(req.session.currentUser);
+  } else {
+    res.status(404).json({ code: 'not-found' });
+  }
+});
+
 router.get('/login', (req, res, next) => {
   if(req.session.currentUser) {
     res.json(req.session.currentUser);
@@ -25,7 +33,7 @@ router.post('/login', (req, res, next) => {
   const { email, password } = req.body;
 
   User.findOne({
-    email
+    email,
   })
     .then((user) => {
       if (!user) {
