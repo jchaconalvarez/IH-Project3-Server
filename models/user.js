@@ -7,6 +7,11 @@ const userSchema = new Schema({
   email: String,
   password: String,
   songs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+}, {
+    timestamps: {
+      createdAt: 'created_at',
+      updatedAt: 'updated_at'
+    },
 })
 
 const User = mongoose.model('User', userSchema);

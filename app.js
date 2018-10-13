@@ -14,9 +14,9 @@ require('dotenv').config();
 // db.on('error', console.error.bind(console, 'connection error:'));
 // db.once('open', () => console.log(`Connected to auth-react database`));
 
-mongoose.connect('mongodb://admin:admin2018@ds125723.mlab.com:25723/ihproject3', { useNewUrlParser: true })
-  .then(() => ( console.log('CONNECTED!')))
-  .catch((error) => ( console.log(error)));
+mongoose.connect('mongodb://admin:admin2018@ds131373.mlab.com:31373/ironhackp3', { useNewUrlParser: true })
+  .then(() => (console.log('CONNECTED!')))
+  .catch((error) => (console.log(error)));
 
 const app = express();
 app.use(cors({
@@ -39,6 +39,7 @@ app.set('view engine', 'jade');
 // });
 
 const authRouter = require('./routes/auth');
+const playRouter = require('./routes/play');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
@@ -55,6 +56,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth', authRouter);
+app.use('/play', playRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
