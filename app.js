@@ -14,7 +14,7 @@ require('dotenv').config();
 // db.on('error', console.error.bind(console, 'connection error:'));
 // db.once('open', () => console.log(`Connected to auth-react database`));
 
-mongoose.connect('mongodb://admin:admin2018@ds125723.mlab.com:25723/ihproject3', { useNewUrlParser: true })
+mongoose.connect('mongodb://admin:admin2018@ds131373.mlab.com:31373/ironhackp3', { useNewUrlParser: true })
   .then(() => ( console.log('CONNECTED!')))
   .catch((error) => ( console.log(error)));
 
@@ -23,7 +23,6 @@ app.use(cors({
   origin: 'http://localhost:3000',
   credentials: true,
 }));
-
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
