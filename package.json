@@ -22,5 +22,8 @@
   },
   "devDependencies": {
     "eslint-config-airbnb": "^17.1.0"
+  },
+  "eslintConfig": {
+    "extends": "airbnb"
   }
 }
