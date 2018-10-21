@@ -4,6 +4,7 @@ const router = express.Router();
 const Song = require('../models/song');
 
 router.post('/newsong', (req, res, next) => {
+
   const newSong = Song({ notes: req.body });
   return newSong.save()
     .then(() => {
