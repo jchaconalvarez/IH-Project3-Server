@@ -6,7 +6,7 @@ const songSchema = new Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
   name: String,
   instrument: String,
-  notes: [],
+  notes: [{}],
 }, {
   timestamps: {
       createdAt: 'created_at',
