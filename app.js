@@ -7,6 +7,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const session = require('express-session');
 const cors = require('cors');
+const MongoStore = require('connect-mongo')(session);
 
 require('dotenv').config();
 
@@ -40,14 +41,21 @@ app.set('view engine', 'jade');
 
 const authRouter = require('./routes/auth');
 const playRouter = require('./routes/play');
+const songRouter = require('./routes/song');
 
-// uncomment after placing your favicon in /public
-//app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
+
 app.use(session({
-  secret: 'react auth secret shh',
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection,
+    ttl: 24 * 60 * 60 // 1 day
+  }),
+  // MOVE TO .ENV
+  secret: 'some-string', 
   resave: true,
   saveUninitialized: true,
-  cookie: { httpOnly: true, maxAge: 60000 },
+  cookie: {
+    maxAge: 24 * 60 * 60 * 1000
+  }
 }));
 app.use(logger('dev'));
 app.use(bodyParser.json());
@@ -57,6 +65,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/auth', authRouter);
 app.use('/play', playRouter);
+app.use('/song', songRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
