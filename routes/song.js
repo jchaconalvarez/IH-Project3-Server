@@ -8,9 +8,22 @@ router.post('/newsong', (req, res, next) => {
   const newSong = Song({ songName, noteHistory });
   return newSong.save()
     .then(() => {
-      res.status(201).json(newSong);
+      Song.findOne({}).sort({ created_at: -1 })
+        .then((newSong) => {
+          res.status(201).json(newSong);
+        });
     })
     .catch(next);
 });
 
+router.put('/:id', (req, res, next) => {
+  const { id } = req.params;
+  const { songName, noteHistory } = req.body;
+  Song.findByIdAndUpdate(id, { songName, noteHistory })
+    .then((song) => {
+      res.status(200).json(song);
+    });
+});
+
 module.exports = router;
+``
