@@ -50,7 +50,7 @@ app.use(session({
     ttl: 24 * 60 * 60 // 1 day
   }),
   // MOVE TO .ENV
-  secret: 'some-string', 
+  secret: 'some-string',
   resave: true,
   saveUninitialized: true,
   cookie: {
@@ -62,7 +62,6 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/auth', authRouter);
 app.use('/play', playRouter);
 app.use('/song', songRouter);

@@ -4,9 +4,13 @@ const Schema = mongoose.Schema;
 
 const songSchema = new Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-  name: String,
-  instrument: String,
-  notes: [{}],
+  songName: String,
+  midiInstrument: String,
+  noteHistory: [{
+    data: [],
+    timeStampOn: Number,
+    timeStampOff: Number,
+  }],
 }, {
   timestamps: {
       createdAt: 'created_at',
