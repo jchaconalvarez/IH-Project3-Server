@@ -4,8 +4,9 @@ const router = express.Router();
 const Song = require('../models/song');
 
 router.post('/newsong', (req, res, next) => {
+  const user = req.session.currentUser._id
   const { songName, noteHistory } = req.body;
-  const newSong = Song({ songName, noteHistory });
+  const newSong = Song({ songName, noteHistory, user });
   return newSong.save()
     .then(() => {
       Song.findOne({}).sort({ created_at: -1 })

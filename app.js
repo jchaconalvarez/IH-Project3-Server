@@ -42,6 +42,7 @@ app.set('view engine', 'jade');
 const authRouter = require('./routes/auth');
 const playRouter = require('./routes/play');
 const songRouter = require('./routes/song');
+// const profileRouter = require('./routes/profile');
 
 
 app.use(session({
@@ -65,6 +66,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', authRouter);
 app.use('/play', playRouter);
 app.use('/song', songRouter);
+// app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
