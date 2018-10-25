@@ -1,12 +1,12 @@
 const mongoose = require('mongoose');
 
-const Schema = mongoose.Schema;
+const { ObjectId } = mongoose.SchemaTypes;
 
-const userSchema = new Schema({
+const userSchema = new mongoose.Schema({
   username: String,
   email: String,
   password: String,
-  songs: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User' }],
+  songs: [{ type: ObjectId, ref: 'Song' }],
 }, {
     timestamps: {
       createdAt: 'created_at',
