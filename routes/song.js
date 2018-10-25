@@ -6,13 +6,8 @@ const Users = require('../models/user')
 
 // CREATE
 router.post('/newsong', (req, res, next) => {
-  const user = req.session.currentUser._id;
   const { songName, noteHistory } = req.body;
-<<<<<<< HEAD
-  const newSong = Song({ songName, noteHistory, user });
-=======
   const newSong = Songs({ songName, noteHistory });
->>>>>>> b46646ac0dbff94a17ddfa57362c823b077e8069
   return newSong.save()
     .then((song) => {
       const { _id: songId } = song;
@@ -49,6 +44,15 @@ router.put('/:id', (req, res, next) => {
       console.log('UPDATED');
       res.status(200).json(song);
     });
+});
+
+router.delete('/:id', (req, res, next) => {
+  const { id: songId } = req.params;
+  const { _id: userId } = req.session.currentUser;
+  Songs.findByIdAndRemove(songId)
+  .then(() => {
+    Users.findByIdAndUpdate(userId, { $pull: { songs: songId } });
+    })
 });
 
 module.exports = router;
