@@ -1,19 +1,20 @@
 const express = require('express');
 const router = express.Router();
 
-const Song = require('../models/song');
-const User = require('../models/user')
+const Songs = require('../models/song');
+const Users = require('../models/user')
 
+// CREATE
 router.post('/newsong', (req, res, next) => {
   const { songName, noteHistory } = req.body;
-  const newSong = Song({ songName, noteHistory });
+  const newSong = Songs({ songName, noteHistory });
   return newSong.save()
     .then((song) => {
       const { _id: songId } = song;
       const { _id: userId } = req.session.currentUser;
-      User.findByIdAndUpdate(userId, { $push: { songs: songId } })
+      Users.findByIdAndUpdate(userId, { $push: { songs: songId } })
         .then(() => {
-          Song.findById(songId)
+          Songs.findById(songId)
             .then((song) => {
               res.status(201).json(song);
             })
@@ -22,11 +23,25 @@ router.post('/newsong', (req, res, next) => {
     .catch(next);
 });
 
+// READ
+router.get('/getusersongs', (req, res, next) => {
+  const { _id: userId} = req.session.currentUser;
+  console.log(userId);
+  Users.findById(userId).populate('songs')
+    .then((user) => {
+      console.log('POSTPOPULATE: ', user);
+      res.status(200).json(user.songs);
+    });
+});
+
+// UPDATE
 router.put('/:id', (req, res, next) => {
   const { id } = req.params;
   const { songName, noteHistory } = req.body;
-  Song.findByIdAndUpdate(id, { songName, noteHistory })
+  console.log('PUTPUT');
+  Songs.findByIdAndUpdate(id, { songName, noteHistory })
     .then((song) => {
+      console.log('UPDATED');
       res.status(200).json(song);
     });
 });
