@@ -40,7 +40,6 @@ app.set('view engine', 'jade');
 // });
 
 const authRouter = require('./routes/auth');
-const playRouter = require('./routes/play');
 const songRouter = require('./routes/song');
 
 
@@ -63,7 +62,6 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/auth', authRouter);
-app.use('/play', playRouter);
 app.use('/song', songRouter);
 
 // catch 404 and forward to error handler

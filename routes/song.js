@@ -25,13 +25,20 @@ router.post('/newsong', (req, res, next) => {
 
 // READ
 router.get('/getusersongs', (req, res, next) => {
-  const { _id: userId} = req.session.currentUser;
-  console.log(userId);
+  const { _id: userId } = req.session.currentUser;
   Users.findById(userId).populate('songs')
     .then((user) => {
-      console.log('POSTPOPULATE: ', user);
       res.status(200).json(user.songs);
     });
+});
+
+router.get('/:id', (req, res, next) => {
+  const { id: songId } = req.params;
+
+  Songs.findById(songId)
+    .then((song) => {
+      res.status(200).json(song);
+    })
 });
 
 // UPDATE
