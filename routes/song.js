@@ -45,20 +45,20 @@ router.get('/:id', (req, res, next) => {
 router.put('/:id', (req, res, next) => {
   const { id } = req.params;
   const { songName, noteHistory } = req.body;
-  console.log('PUTPUT');
   Songs.findByIdAndUpdate(id, { songName, noteHistory })
     .then((song) => {
-      console.log('UPDATED');
       res.status(200).json(song);
     });
 });
 
+// DELETE
 router.delete('/:id', (req, res, next) => {
   const { id: songId } = req.params;
   const { _id: userId } = req.session.currentUser;
   Songs.findByIdAndRemove(songId)
   .then(() => {
     Users.findByIdAndUpdate(userId, { $pull: { songs: songId } });
+    res.status(200);
     })
 });
 
