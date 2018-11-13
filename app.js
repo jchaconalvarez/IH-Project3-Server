@@ -11,7 +11,7 @@ const MongoStore = require('connect-mongo')(session);
 
 require('dotenv').config();
 
-mongoose.connect('mongodb://admin:admin2018@ds131373.mlab.com:31373/ironhackp3', { useNewUrlParser: true })
+mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .then(() => (console.log('CONNECTED!')))
   .catch((error) => (console.log(error)));
 
@@ -36,8 +36,7 @@ app.use(session({
     mongooseConnection: mongoose.connection,
     ttl: 24 * 60 * 60 // 1 day
   }),
-  // MOVE TO .ENV
-  secret: 'some-string',
+  secret: process.env.MONGO,
   resave: true,
   saveUninitialized: true,
   cookie: {
