@@ -17,7 +17,7 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 
 const app = express();
 app.use(cors({
-  origin: process.env.FIREBASE_URI,
+  origin: 'https://project3-client-5540d.firebaseapp.com/',
   credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }));
