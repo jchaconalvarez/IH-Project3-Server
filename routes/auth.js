@@ -26,7 +26,7 @@ router.get('/login', (req, res, next) => {
 router.post('/login', (req, res, next) => {
   if(req.session.currentUser) {
     return res.status(401).json({
-      error: 'unauthorized'
+      error: 'You are already logged in'
     });
   }
 
@@ -38,7 +38,7 @@ router.post('/login', (req, res, next) => {
     .then((user) => {
       if (!user) {
         return res.status(404).json({
-          error: 'not-found'
+          error: 'Email or password is incorrect'
         });
       }
       if (bcrypt.compareSync(password, user.password)) {
@@ -46,7 +46,7 @@ router.post('/login', (req, res, next) => {
         return res.json(user);
       }
       return res.status(404).json({
-        error: 'not-found'
+        error: 'Email or password is incorrect'
       });
     })
     .catch(next);
@@ -60,7 +60,7 @@ router.post('/signup', (req, res, next) => {
 
   if (!email || !password) {
     return res.status(422).res.json({
-      error: 'empty'
+      error: 'All fields are required'
     });
   }
 
@@ -70,7 +70,7 @@ router.post('/signup', (req, res, next) => {
     .then((userExists) => {
       if (userExists) {
         return res.status(422).json({
-          error: 'email-not-unique'
+          error: 'Email is already taken'
         });
       }
 
