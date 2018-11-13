@@ -20,19 +20,14 @@ const app = express();
 const corsOriginURI = app.get('env') === 'development'
   ? process.env.FRONTEND_DEVELOPMENT_URI : process.env.FRONTEND_PRODUCTION_URI;
 
+const environment = app.get('env') === 'development' ? 'development' : 'production';
+console.log('ENVIRONMENT: ', environment);
+
 app.use(cors({
   origin: corsOriginURI,
   credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }));
-
-app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', serverAllowed)
-  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE')
-  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
-  res.setHeader('Access-Control-Allow-Credentials', true)
-  next()
-})
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
