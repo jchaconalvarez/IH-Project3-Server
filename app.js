@@ -16,20 +16,31 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
   .catch((error) => (console.log(error)));
 
 const app = express();
+
+const corsOriginURI = app.get('env') === 'development'
+  ? process.env.FRONTEND_DEVELOPMENT_URI : process.env.FRONTEND_PRODUCTION_URI;
+
 app.use(cors({
-  origin: 'https://project3-client-5540d.firebaseapp.com/',
+  origin: corsOriginURI,
   credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
 }));
 
+app.use((req, res, next) => {
+  res.setHeader('Access-Control-Allow-Origin', serverAllowed)
+  res.setHeader('Access-Control-Allow-Methods', 'GET,PUT,POST,OPTIONS,DELETE')
+  res.setHeader('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept')
+  res.setHeader('Access-Control-Allow-Credentials', true)
+  next()
+})
+
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'jade');
+// app.set('views', path.join(__dirname, 'views'));
+// app.set('view engine', 'jade');
 
 const authRouter = require('./routes/auth');
 const songRouter = require('./routes/song');
 const profileRouter = require('./routes/profile');
-
 
 app.use(session({
   store: new MongoStore({
