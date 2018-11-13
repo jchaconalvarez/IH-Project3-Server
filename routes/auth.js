@@ -7,7 +7,8 @@ const { isLoggedIn } = require('../helpers/isLoggin');
 
 router.get('/me', (req, res, next) => {
   if (req.session.currentUser) {
-    res.json(req.session.currentUser);
+    // res.json(req.session.currentUser);
+    res.json('Hello from /me');
   } else {
     res.status(404).json({ code: 'not-found' });
   }
