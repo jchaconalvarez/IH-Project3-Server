@@ -24,10 +24,11 @@ const environment = app.get('env') === 'development' ? 'development' : 'producti
 console.log('ENVIRONMENT: ', environment);
 
 app.use(cors({
-  origin: corsOriginURI,
+  // origin: corsOriginURI,
+  origin: false,
   credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type, Authorization',
+  allowedHeaders: 'Content-Type,Authorization',
 }));
 
 // view engine setup
