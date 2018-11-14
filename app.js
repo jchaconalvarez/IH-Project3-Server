@@ -23,18 +23,18 @@ const app = express();
 // const environment = app.get('env') === 'development' ? 'development' : 'production';
 // console.log('ENVIRONMENT: ', environment);
 
-// app.use(cors({
-//   origin: corsOriginURI,
-//   credentials: true,
-//   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-//   allowedHeaders: 'Content-Type,Authorization',
-// }));
+app.use(cors({
+  origin: process.env.PUBLIC_DOMAIN,
+  credentials: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type,Authorization',
+}));
 
 // THOR FIX
-app.use(cors({
-  credentials: true,
-  origin: process.env.PUBLIC_DOMAIN,
-}));
+// app.use(cors({
+//   credentials: true,
+//   origin: process.env.PUBLIC_DOMAIN,
+// }));
 
 // view engine setup
 // app.set('views', path.join(__dirname, 'views'));
