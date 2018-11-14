@@ -17,17 +17,15 @@ mongoose.connect(process.env.MONGODB_URI, { useNewUrlParser: true })
 
 const app = express();
 
-const corsOriginURI = app.get('env') === 'development'
-  ? process.env.FRONTEND_DEVELOPMENT_URI : process.env.FRONTEND_PRODUCTION_URI;
+// const corsOriginURI = app.get('env') === 'development'
+//   ? process.env.FRONTEND_DEVELOPMENT_URI : process.env.FRONTEND_PRODUCTION_URI;
 
 const environment = app.get('env') === 'development' ? 'development' : 'production';
 console.log('ENVIRONMENT: ', environment);
 
 app.use(cors({
-  origin: corsOriginURI,
   credentials: true,
-  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-  allowedHeaders: 'Content-Type,Authorization',
+  origin: [process.env.FRONTEND_PRODUCTION_URI]
 }));
 
 // view engine setup
