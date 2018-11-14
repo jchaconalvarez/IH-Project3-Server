@@ -27,6 +27,7 @@ app.use(cors({
   origin: corsOriginURI,
   credentials: true,
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  allowedHeaders: 'Content-Type, Authorization',
 }));
 
 // view engine setup
