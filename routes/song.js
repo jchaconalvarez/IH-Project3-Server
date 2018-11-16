@@ -44,9 +44,13 @@ router.get('/:id', (req, res, next) => {
 // UPDATE
 router.put('/:id', (req, res, next) => {
   const { id } = req.params;
-  const { songName, noteHistory } = req.body;
-  Songs.findByIdAndUpdate(id, { songName, noteHistory })
+  const { songName, originalRecTimeStamp, noteHistory } = req.body;
+  console.log('songName: ', songName);
+  console.log('originalRecTimeStamp: ', originalRecTimeStamp);
+  console.log('noteHistory: ', noteHistory);
+  Songs.findByIdAndUpdate(id, { songName, originalRecTimeStamp, noteHistory })
     .then((song) => {
+      console.log('song: ', song);
       res.status(200).json(song);
     });
 });
